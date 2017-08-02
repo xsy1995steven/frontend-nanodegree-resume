@@ -107,7 +107,7 @@ bio.display = function(){
 };
 
 work.display = function(){
-  for(job in work.jobs){
+  for(var job in work.jobs){
     $("#workExperience").append(HTMLworkStart);
     var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
     var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
@@ -122,7 +122,7 @@ work.display = function(){
 
 
 education.display = function(){
-  for(i in education.schools){
+  for(var i in education.schools){
     $("#education").append(HTMLschoolStart);
     var formattedschoolName = HTMLschoolName.replace("%data%",education.schools[i].name);
     var formattedschoolDegree = HTMLschoolDegree.replace("%data%",education.schools[i].degree);
@@ -143,7 +143,7 @@ education.display = function(){
 };
 
 project.display = function(){
-  for(i in project.projects){
+  for(var i in project.projects){
     $("#projects").append(HTMLprojectStart);
     var formattedprojectTitle = HTMLprojectTitle.replace("%data%",project.projects[i].title);
     var formattedprojectDates = HTMLprojectDates.replace("%data%",project.projects[i].dates);
