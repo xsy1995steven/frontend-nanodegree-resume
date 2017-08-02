@@ -132,7 +132,7 @@ education.display = function(){
 
     $(".education-entry:last").append(formattedschoolName+formattedschoolDegree+formattedschoolDates+formattedschoolLocation+formattedMajor);
 
-  };
+  }
   $(".education-entry:last").append(HTMLonlineClasses);
   var formattedonlineTitle = HTMLonlineTitle.replace("%data%",education.online_courses.title);
   var formattedonlineSchool = HTMLonlineSchool.replace("%data%",education.online_courses.school);
