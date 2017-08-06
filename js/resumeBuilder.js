@@ -12,13 +12,15 @@ This is empty on purpose! Your code to build the resume will go here.
 var bio = {
     "name":"steven",
     "role":"student",
-    "contact_info": {
+    "contacts": {
       "mobile" : "18795881683",
       "email" : "xsy512@gmail.com",
       "github" : "xsy1995steven",
+      "location":"Ann Arbor, Michigan"
     },
-    "picture_url": "images/me.jpg",
-    "skills":"java, JavaScript, c++, matlab, python",
+    "biopic": "images/me.jpg",
+    "skills":["java", "JavaScript", "c++", "matlab", "python"],
+    "welcome_message":"Smart is the new sexy"
 
 };
 
@@ -47,14 +49,15 @@ var project = {
       "title":"Display R&D Centre of Southeast University",
       "role":"Student Researcher",
       "dates":"11/2015---11/2016",
-      "description":"Calculated hologram with modified IFTA(Iterative Flourier Transform Algorithm) by Matlab\nDesigned 4F optical system and used LCOS for Augmented Reality display imagining.\nFamiliar with GS algorithm and holographic imaging principle."
-
+      "description":"Calculated hologram with modified IFTA(Iterative Flourier Transform Algorithm) by Matlab\nDesigned 4F optical system and used LCOS for Augmented Reality display imagining.\nFamiliar with GS algorithm and holographic imaging principle.",
+      "image":"images/project1.jpg"
     },
     {
       "title":"2016 Interdisciplinary Contest In Modeling(ICM)",
       "role":"Team leader",
       "dates":"01/2016---02/2016",
-      "description":"Used Interval Value-based Variable Fuzzy Assessment Method by Matlab to evaluate the scarcity of Water Resources in South Africa\nUsed Logistic Prediction and Time Series Prediction by Matlab to predict it until 2025.\nGot Meritorious Winner, familiar with math modeling method like SVM and BP neural net algorithm."
+      "description":"Used Interval Value-based Variable Fuzzy Assessment Method by Matlab to evaluate the scarcity of Water Resources in South Africa\nUsed Logistic Prediction and Time Series Prediction by Matlab to predict it until 2025.\nGot Meritorious Winner, familiar with math modeling method like SVM and BP neural net algorithm.",
+      "image":"images/project2.jpg"
     }
 
   ]
@@ -68,7 +71,7 @@ var education = {
       "location":"Nanjing China",
       "degree":"Bachelor of Engineering",
       "dates":"2013/09---2017/06",
-      "major":"Electrical Engineering",
+      "majors":["Electrical Engineering"],
       "url":"http://www.seu.edu.cn"
     },
     {
@@ -76,85 +79,107 @@ var education = {
       "location":"Hsinchu Taiwan",
       "degree":"Exchange Student",
       "dates":"09/2014-01/2015",
-      "major":"ElectroPhysics",
+      "majors":["ElectroPhysics"],
       "url":"http://www.nctu.edu.tw"
     }
   ],
-  "online_courses":
+  "onlineCourses":[
     {
       "title":"basic front-end web development",
       "school":"Udacity",
       "dates":"2017/07---2017/08",
       "url":"https://cn.udacity.com/"
 
-  }
+  }]
 };
 
 bio.display = function(){
   var formattedName = HTMLheaderName.replace("%data%",bio.name);
   var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
-  var formattedPic = HTMLbioPic.replace("%data%",bio.picture_url);
-  var formattedskills = HTMLskills.replace("%data%",bio.skills);
+  var formattedPic = HTMLbioPic.replace("%data%",bio.biopic);
+  // var formattedskills = HTMLskills.replace("%data%",bio.skills);
+  var formattedlocation =  HTMLlocation.replace("%data%",bio.contacts.location);
+  var formattedwelcomeMsg =  HTMLwelcomeMsg.replace("%data%",bio.welcome_message);
 
-  var formattedmobile = HTMLmobile.replace("%data%",bio.contact_info.mobile);
-  var formattedemail = HTMLemail.replace("%data%",bio.contact_info.email);
-  var formattedgithub = HTMLgithub.replace("%data%",bio.contact_info.github);
+  var formattedmobile = HTMLmobile.replace("%data%",bio.contacts.mobile);
+  var formattedemail = HTMLemail.replace("%data%",bio.contacts.email);
+  var formattedgithub = HTMLgithub.replace("%data%",bio.contacts.github);
   $("#header").prepend(formattedName+formattedRole);
-  $("#topContacts").append(formattedmobile+formattedemail+formattedgithub);
+  $("#topContacts").append(formattedmobile+formattedemail+formattedgithub+formattedlocation);
+  $("#footerContacts").append(formattedmobile+formattedemail+formattedgithub+formattedlocation);
   $("#header").append(formattedPic);
+  $("#header").append(formattedwelcomeMsg);
   $("#header").append(HTMLskillsStart);
-  $("#header").append(formattedskills);
+  // $("#header").append(formattedskills);
+  bio.skills.forEach(function(skill){
+    var formattedskills = HTMLskills.replace("%data%",skill);
+    $("#skills").append(formattedskills);
+  });
 };
 
+
 work.display = function(){
-  for(var job in work.jobs){
+  // for(var job in work.jobs){
+  //   $("#workExperience").append(HTMLworkStart);
+  //   var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
+  //   var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
+  //   var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
+  //   var formattedLocation = HTMLworkLocation.replace("%data%",work.jobs[job].location);
+  //   var formattedDescription = HTMLworkDescription.replace("%data%",work.jobs[job].description);
+  //
+  //   $(".work-entry:last").append(formattedEmployer+formattedTitle+formattedDates+formattedLocation+formattedDescription);
+  //
+  // }
+  work.jobs.forEach(function(job){
     $("#workExperience").append(HTMLworkStart);
-    var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
-    var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
-    var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
-    var formattedLocation = HTMLworkLocation.replace("%data%",work.jobs[job].location);
-    var formattedDescription = HTMLworkDescription.replace("%data%",work.jobs[job].description);
+    var formattedEmployer = HTMLworkEmployer.replace("%data%",job.employer);
+    var formattedTitle = HTMLworkTitle.replace("%data%",job.title);
+    var formattedDates = HTMLworkDates.replace("%data%",job.dates);
+    var formattedLocation = HTMLworkLocation.replace("%data%",job.location);
+    var formattedDescription = HTMLworkDescription.replace("%data%",job.description);
 
     $(".work-entry:last").append(formattedEmployer+formattedTitle+formattedDates+formattedLocation+formattedDescription);
-
-  }
+  })
 };
 
 
 education.display = function(){
-  for(var i in education.schools){
+  education.schools.forEach(function(school){
     $("#education").append(HTMLschoolStart);
-    var formattedschoolName = HTMLschoolName.replace("%data%",education.schools[i].name);
-    var formattedschoolDegree = HTMLschoolDegree.replace("%data%",education.schools[i].degree);
-    var formattedschoolDates = HTMLschoolDates.replace("%data%",education.schools[i].dates);
-    var formattedschoolLocation = HTMLschoolLocation.replace("%data%",education.schools[i].location);
-    var formattedMajor = HTMLschoolMajor.replace("%data%",education.schools[i].major);
+    var formattedschoolName = HTMLschoolName.replace("%data%",school.name);
+    var formattedschoolDegree = HTMLschoolDegree.replace("%data%",school.degree);
+    var formattedschoolDates = HTMLschoolDates.replace("%data%",school.dates);
+    var formattedschoolLocation = HTMLschoolLocation.replace("%data%",school.location);
+    var formattedMajor = HTMLschoolMajor.replace("%data%",school.majors);
 
     $(".education-entry:last").append(formattedschoolName+formattedschoolDegree+formattedschoolDates+formattedschoolLocation+formattedMajor);
+  });
+  education.onlineCourses.forEach(function(course){
+    $(".education-entry:last").append(HTMLonlineClasses);
+    var formattedonlineTitle = HTMLonlineTitle.replace("%data%",course.title);
+    var formattedonlineSchool = HTMLonlineSchool.replace("%data%",course.school);
+    var formattedonlineDates =HTMLonlineDates.replace("%data%",course.dates);
+    var formattedonlineURL = HTMLonlineURL.replace("%data%",course.url);
+    $(".education-entry:last").append(formattedonlineTitle+formattedonlineSchool+formattedonlineDates+formattedonlineURL);
 
-  }
-  $(".education-entry:last").append(HTMLonlineClasses);
-  var formattedonlineTitle = HTMLonlineTitle.replace("%data%",education.online_courses.title);
-  var formattedonlineSchool = HTMLonlineSchool.replace("%data%",education.online_courses.school);
-  var formattedonlineDates =HTMLonlineDates.replace("%data%",education.online_courses.dates);
-  var formattedonlineURL = HTMLonlineURL.replace("%data%",education.online_courses.url);
-  $(".education-entry:last").append(formattedonlineTitle+formattedonlineSchool+formattedonlineDates+formattedonlineURL);
+  })
 
 };
 
 project.display = function(){
-  for(var i in project.projects){
+  project.projects.forEach(function(project){
     $("#projects").append(HTMLprojectStart);
-    var formattedprojectTitle = HTMLprojectTitle.replace("%data%",project.projects[i].title);
-    var formattedprojectDates = HTMLprojectDates.replace("%data%",project.projects[i].dates);
-    var formattedprojectDescription = HTMLprojectDescription.replace("%data%",project.projects[i].description);
+    var formattedprojectTitle = HTMLprojectTitle.replace("%data%",project.title);
+    var formattedprojectDates = HTMLprojectDates.replace("%data%",project.dates);
+    var formattedprojectDescription = HTMLprojectDescription.replace("%data%",project.description);
+    var formattedprojectImage = HTMLprojectImage.replace("%data%",project.image);
 
-    $(".project-entry:last").append(formattedprojectTitle+formattedprojectDates+formattedprojectDescription);
+    $(".project-entry:last").append(formattedprojectTitle+formattedprojectDates+formattedprojectDescription+formattedprojectImage);
     //  $("project-entry:last").append("i love music");
-
-  }
+  });
 };
 bio.display();
 work.display();
 education.display();
 project.display();
+$("#mapDiv").append(googleMap);
