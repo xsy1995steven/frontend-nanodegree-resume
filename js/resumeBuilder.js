@@ -20,7 +20,7 @@ var bio = {
     },
     "biopic": "images/me.jpg",
     "skills":["java", "JavaScript", "c++", "matlab", "python"],
-    "welcome_message":"Smart is the new sexy"
+    "welcomeMessage":"Smart is the new sexy"
 
 };
 
@@ -43,21 +43,21 @@ var work = {
 	]
 };
 
-var project = {
+var projects = {
   "projects":[
     {
       "title":"Display R&D Centre of Southeast University",
       "role":"Student Researcher",
       "dates":"11/2015---11/2016",
       "description":"Calculated hologram with modified IFTA(Iterative Flourier Transform Algorithm) by Matlab\nDesigned 4F optical system and used LCOS for Augmented Reality display imagining.\nFamiliar with GS algorithm and holographic imaging principle.",
-      "image":"images/project1.jpg"
+      "images":["images/project1.jpg"]
     },
     {
       "title":"2016 Interdisciplinary Contest In Modeling(ICM)",
       "role":"Team leader",
       "dates":"01/2016---02/2016",
       "description":"Used Interval Value-based Variable Fuzzy Assessment Method by Matlab to evaluate the scarcity of Water Resources in South Africa\nUsed Logistic Prediction and Time Series Prediction by Matlab to predict it until 2025.\nGot Meritorious Winner, familiar with math modeling method like SVM and BP neural net algorithm.",
-      "image":"images/project2.jpg"
+      "images":["images/project2.jpg"]
     }
 
   ]
@@ -99,14 +99,13 @@ bio.display = function(){
   var formattedPic = HTMLbioPic.replace("%data%",bio.biopic);
   // var formattedskills = HTMLskills.replace("%data%",bio.skills);
   var formattedlocation =  HTMLlocation.replace("%data%",bio.contacts.location);
-  var formattedwelcomeMsg =  HTMLwelcomeMsg.replace("%data%",bio.welcome_message);
+  var formattedwelcomeMsg =  HTMLwelcomeMsg.replace("%data%",bio.welcomeMessage);
 
   var formattedmobile = HTMLmobile.replace("%data%",bio.contacts.mobile);
   var formattedemail = HTMLemail.replace("%data%",bio.contacts.email);
   var formattedgithub = HTMLgithub.replace("%data%",bio.contacts.github);
   $("#header").prepend(formattedName+formattedRole);
-  $("#topContacts").append(formattedmobile+formattedemail+formattedgithub+formattedlocation);
-  $("#footerContacts").append(formattedmobile+formattedemail+formattedgithub+formattedlocation);
+  $("#topContacts,#footerContacts").append(formattedmobile+formattedemail+formattedgithub+formattedlocation);
   $("#header").append(formattedPic);
   $("#header").append(formattedwelcomeMsg);
   $("#header").append(HTMLskillsStart);
@@ -166,20 +165,26 @@ education.display = function(){
 
 };
 
-project.display = function(){
-  project.projects.forEach(function(project){
+projects.display = function(){
+  projects.projects.forEach(function(project){
     $("#projects").append(HTMLprojectStart);
     var formattedprojectTitle = HTMLprojectTitle.replace("%data%",project.title);
     var formattedprojectDates = HTMLprojectDates.replace("%data%",project.dates);
     var formattedprojectDescription = HTMLprojectDescription.replace("%data%",project.description);
-    var formattedprojectImage = HTMLprojectImage.replace("%data%",project.image);
+    // var formattedprojectImage = HTMLprojectImage.replace("%data%",project.images);
 
-    $(".project-entry:last").append(formattedprojectTitle+formattedprojectDates+formattedprojectDescription+formattedprojectImage);
+    $(".project-entry:last").append(formattedprojectTitle+formattedprojectDates+formattedprojectDescription);
+    project.images.forEach(function(image){
+      var formattedprojectImage = HTMLprojectImage.replace("%data%",image);
+      $(".project-entry:last").append(formattedprojectImage);
+    });
+
     //  $("project-entry:last").append("i love music");
   });
+
 };
 bio.display();
 work.display();
 education.display();
-project.display();
+projects.display();
 $("#mapDiv").append(googleMap);
